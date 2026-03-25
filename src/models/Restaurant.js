@@ -1,5 +1,6 @@
 // Represents a restaurant and normalises API data into a consistent format
 // Safely handles missing API fields using optional chaining
+
 class Restaurant {
   constructor(data) {
     this.name = data?.name || "";

@@ -4,6 +4,7 @@
 
 import { useState } from "react";
 import Restaurant from "./models/Restaurant";
+import RestaurantCard from "./components/RestaurantCard/RestaurantCard";
 
 function App() {
   const [restaurants, setRestaurants] = useState([]);
@@ -42,7 +43,9 @@ function App() {
 
     setError(""); // Clear previous errors
 
-    fetch(`/api/discovery/uk/restaurants/enriched/bypostcode/${validation.cleaned}`)
+    fetch(
+      `/api/discovery/uk/restaurants/enriched/bypostcode/${validation.cleaned}`,
+    )
       .then((res) => res.json())
       .then((data) => {
         const rawRestaurants = data?.restaurants || [];
@@ -75,29 +78,44 @@ function App() {
         type="text"
         placeholder="Enter postcode"
         value={postcode}
-        onChange={(e) => {setPostcode(e.target.value); setError("");}}
+        onChange={(e) => {
+          setPostcode(e.target.value);
+          setError("");
+        }}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
-        {loading && <div>Loading...</div>}
-      <button onClick={handleSearch} disabled={loading}>Search</button>
+      {loading && <div>Loading...</div>}
+      <button onClick={handleSearch} disabled={loading}>
+        Search
+      </button>
       {error && <p style={{ color: "red" }}>{error}</p>}
-    
-      {restaurants.map((restaurant, index) => (
-        <div key={index}>
-          <img
-            src={restaurant.logoURL}
-            alt={restaurant.name}
-            style={{ width: "100px", height: "auto" }}
-          />
-          <h2>{restaurant.name}</h2>
-          <p>Cuisines: {restaurant.cuisines}</p>
-          <p>Star Rating: {restaurant.rating}</p>
-          <p>Address: {restaurant.fullAddress}</p>
-          <hr />
-        </div>
+      {restaurants.map((restaurant) => (
+        <RestaurantCard key={restaurant.name} restaurant={restaurant} />
       ))}
     </div>
   );
 }
 
 export default App;
+
+//     {restaurants.map((restaurant, index) => (
+//       <div key={restaurant.name}>
+//         <img
+//           src={
+//             restaurant.logoURL ||
+//             "https://images.seeklogo.com/logo-png/40/1/just-eat-logo-png_seeklogo-408326.png"
+//           }
+//           alt={restaurant.name}
+//           style={{ width: "100px", height: "auto" }}
+//           onError={(e) => {
+//             e.target.src =
+//               "https://images.seeklogo.com/logo-png/40/1/just-eat-logo-png_seeklogo-408326.png";
+//           }}
+//         />
+//         <h2>{restaurant.name}</h2>
+//         <p>Cuisines: {restaurant.cuisines}</p>
+//         <p>Star Rating: {restaurant.rating}</p>
+//         <p>Address: {restaurant.fullAddress}</p>
+//         <hr />
+//       </div>
+//     ))}
