@@ -9,6 +9,7 @@ function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [postcode, setPostcode] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Validates the postcode format using a regex
   function validatePostcode(input) {
@@ -28,12 +29,14 @@ function App() {
 
   // Fetches restaurants for a validated postcode
   const handleSearch = () => {
+    setLoading(true);
     setRestaurants([]); // Clear previous results
 
     const validation = validatePostcode(postcode);
 
     if (validation.error) {
       setError(validation.error);
+      setLoading(false);
       return;
     }
 
@@ -47,6 +50,7 @@ function App() {
         if (rawRestaurants.length === 0) {
           setError("Please enter a valid postcode");
           setRestaurants([]);
+          setLoading(false);
           return;
         }
 
@@ -55,10 +59,12 @@ function App() {
           (restaurant) => new Restaurant(restaurant),
         );
         setRestaurants(restaurantObjects.slice(0, 10));
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
         setError("An error occurred while fetching data. Please try again.");
+        setLoading(false);
       });
   };
 
@@ -72,8 +78,10 @@ function App() {
         onChange={(e) => setPostcode(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
+        {loading && <div>Loading...</div>}
       <button onClick={handleSearch}>Search</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
+    
       {restaurants.map((restaurant, index) => (
         <div key={index}>
           <img
