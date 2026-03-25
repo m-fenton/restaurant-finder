@@ -48,7 +48,7 @@ function App() {
         const rawRestaurants = data?.restaurants || [];
 
         if (rawRestaurants.length === 0) {
-          setError("Please enter a valid postcode");
+          setError("No restaurants found for this postcode");
           setRestaurants([]);
           setLoading(false);
           return;
@@ -75,11 +75,11 @@ function App() {
         type="text"
         placeholder="Enter postcode"
         value={postcode}
-        onChange={(e) => setPostcode(e.target.value)}
+        onChange={(e) => {setPostcode(e.target.value); setError("");}}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
         {loading && <div>Loading...</div>}
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleSearch} disabled={loading}>Search</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     
       {restaurants.map((restaurant, index) => (
