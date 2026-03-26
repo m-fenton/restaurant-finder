@@ -5,6 +5,7 @@
 import { useState } from "react";
 import Restaurant from "./models/Restaurant";
 import RestaurantCard from "./components/RestaurantCard/RestaurantCard";
+import "./app.css";
 
 function App() {
   const [restaurants, setRestaurants] = useState([]);
@@ -72,23 +73,34 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Restaurant Finder</h1>
-      <input
-        type="text"
-        placeholder="Enter postcode"
-        value={postcode}
-        onChange={(e) => {
-          setPostcode(e.target.value);
-          setError("");
-        }}
-        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-      />
-      {loading && <div>Loading...</div>}
-      <button onClick={handleSearch} disabled={loading}>
-        Search
-      </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="app-container">
+      <h1 className="app-title">Restaurant Finder</h1>
+
+      <div className="search-container">
+        <input
+          className="postcode-input"
+          type="text"
+          placeholder="Enter postcode"
+          value={postcode}
+          onChange={(e) => {
+            setPostcode(e.target.value);
+            setError("");
+          }}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        />
+
+        <button
+          className="search-button"
+          onClick={handleSearch}
+          disabled={loading}
+        >
+          Search
+        </button>
+      </div>
+
+      {loading && <div className="loading-text">Loading...</div>}
+      {error && <p className="error-text">{error}</p>}
+
       {restaurants.map((restaurant) => (
         <RestaurantCard key={restaurant.name} restaurant={restaurant} />
       ))}
@@ -97,25 +109,3 @@ function App() {
 }
 
 export default App;
-
-//     {restaurants.map((restaurant, index) => (
-//       <div key={restaurant.name}>
-//         <img
-//           src={
-//             restaurant.logoURL ||
-//             "https://images.seeklogo.com/logo-png/40/1/just-eat-logo-png_seeklogo-408326.png"
-//           }
-//           alt={restaurant.name}
-//           style={{ width: "100px", height: "auto" }}
-//           onError={(e) => {
-//             e.target.src =
-//               "https://images.seeklogo.com/logo-png/40/1/just-eat-logo-png_seeklogo-408326.png";
-//           }}
-//         />
-//         <h2>{restaurant.name}</h2>
-//         <p>Cuisines: {restaurant.cuisines}</p>
-//         <p>Star Rating: {restaurant.rating}</p>
-//         <p>Address: {restaurant.fullAddress}</p>
-//         <hr />
-//       </div>
-//     ))}
