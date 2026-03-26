@@ -4,15 +4,14 @@
 class Restaurant {
   constructor(data) {
     this.name = data?.name || "";
-
+    
     this.cuisines = this.createCuisinesString(data?.cuisines);
-
+    
     this.rating = data?.rating?.starRating ?? 0;
 
     this.addressLine = data?.address?.firstLine || "";
     this.city = data?.address?.city || "";
     this.postcode = data?.address?.postalCode || "";
-
     this.fullAddress = this.getFullAddress();
 
     this.logoURL = data?.logoUrl || "";
@@ -41,7 +40,7 @@ class Restaurant {
     return cuisinesString;
   }
 
- // Builds a full address string from available parts
+  // Builds a full address string from available parts
   getFullAddress() {
     let parts = [];
 
