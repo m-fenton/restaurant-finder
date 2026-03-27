@@ -35,7 +35,7 @@ npm run dev
 ```
 Open your browser and navigate to the local host address provided in your terminal (typically `http://localhost:5173`).
 
-**Important Note on CORS:** I ran into a CORS issue early on where the Just Eat API blocked direct requests from localhost. I've spent hours circling the drain on CORS issues in past projects, so this time I quickly set up a Vite proxy in `vite.config.js`. It was a straightforward fix that kept me moving without needing to build a separate backend.
+**Important Note on CORS:** I ran into a CORS issue early on where the Just Eat API blocked direct requests from localhost. I've spent too many painful hours on CORS issues in past projects, so this time I quickly set up a Vite proxy in `vite.config.js`. It was a straightforward fix that kept me moving without needing to build a separate backend.
 
 ---
 
