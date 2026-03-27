@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import Restaurant from './Restaurant';
 
-describe('Restaurant Class Data Normalization', () => {
+describe('Restaurant Class Data Normalization (Unit Test)', () => {
 
+  // Test 1: The Happy Path
   it('correctly formats a perfect API response (Happy Path)', () => {
-    // 1. Arrange: Perfect example of Just Eat API data to be fed into test
+    // 1. ARRANGE: Initialize mock data representing a complete, perfect API response.
     const mockApiData = {
       name: "Martin's Pizza Palace",
       rating: { starRating: 4.8 },
@@ -17,10 +18,10 @@ describe('Restaurant Class Data Normalization', () => {
       logoUrl: "https://freedesignfile.com/upload/2019/03/vector-logo-slice-of-pizza-and-ribbon.jpg"
     };
 
-    // 2. Act: Run the data through my class
+    // 2. ACT: Instantiate the Restaurant class with the mock data.
     const restaurant = new Restaurant(mockApiData);
 
-    // 3. Assert: Test if my class correctly normalized the data
+    // 3. ASSERT: Verify that all properties are correctly parsed and normalized.
     expect(restaurant.name).toBe("Martin's Pizza Palace");
     expect(restaurant.rating).toBe(4.8);
     expect(restaurant.fullAddress).toBe("123 React Way, London, SW1A 1AA");
@@ -30,14 +31,15 @@ describe('Restaurant Class Data Normalization', () => {
 
 
 
+  // Test 2: The Edge Case of Missing Data
   it('safely handles completely empty or missing API data', () => {
-    // 1. Arrange: Provided completely empty API data to feed to my class
+    // 1. ARRANGE: Initialize an empty object to simulate missing API data.
     const badApiData = {};
 
-    // 2. Act: Run the data through my class
+    // 2. ACT: Instantiate the Restaurant class with the empty data.
     const restaurant = new Restaurant(badApiData);
 
-    // 3. Assert: My fallbacks and optional chaining should prevent 'undefined' errors
+    // 3. ASSERT: Verify that fallbacks and optional chaining prevent undefined errors and return default values.
     expect(restaurant.name).toBe("");
     expect(restaurant.rating).toBe(0);
     expect(restaurant.fullAddress).toBe("");
@@ -47,16 +49,17 @@ describe('Restaurant Class Data Normalization', () => {
 
 
 
+  // Test 3: Partial Data Handling
   it('formats the address correctly when parts are missing', () => {
-    // 1. Arrange: Partial data set fed into class
+    // 1. ARRANGE: Initialize mock data with a partial address object.
     const partialAddressData = {
       address: { city: "Manchester" }
     };
 
-    // 2. Act: Run the data through my class
+    // 2. ACT: Instantiate the Restaurant class with the partial data.
     const restaurant = new Restaurant(partialAddressData);
 
-    // 3. Assert: Test if my class correctly normalized the available data
+    // 3. ASSERT: Verify that the address is formatted cleanly without dangling commas.
     expect(restaurant.fullAddress).toBe("Manchester");
   });
 

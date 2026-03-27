@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import RestaurantCard from './RestaurantCard';
 
-// Arrange 1: Perfect mock data provided for the Happy Path 
+
+// --- MOCK DATA ---
+
+// Complete data for the Happy Path
 const mockRestaurant = {
   name: "Martin's Pizza Palace",
   cuisines: "Italian, Pizza",
@@ -10,7 +13,7 @@ const mockRestaurant = {
   logoURL: "https://freedesignfile.com/upload/2019/03/vector-logo-slice-of-pizza-and-ribbon.jpg"
 };
 
-// Arrange 2: Providing mock data to test edge case (NO logo)
+// Edge case data (NO logo)
 const mockRestaurantNoLogo = {
   name: "Ghost Kitchen",
   cuisines: "Burgers",
@@ -19,30 +22,37 @@ const mockRestaurantNoLogo = {
   logoURL: "" 
 };
 
-// One describe block that groups all tests for this specific component together
-describe('RestaurantCard Component', () => {
+
+// --- TESTS ---
+
+describe('RestaurantCard Component (Component UI Test)', () => {
   
-  // Test #1: The Happy Path
+  // Test 1: The Happy Path
   it('renders the restaurant details correctly on the screen', () => {
-    // Arrange: Render the component to the virtual screen using mock data from Arrange 1
+    // 1. ARRANGE: Render the component using the complete mock data.
     render(<RestaurantCard restaurant={mockRestaurant} />);
 
-    // Assert: Check text
+    // 2. ACT: (None required for initial render).
+
+    // 3. ASSERT: Verify that the text and image match the mock data perfectly.
     expect(screen.getByText("Martin's Pizza Palace")).toBeInTheDocument();
     expect(screen.getByText("Italian, Pizza")).toBeInTheDocument();
     expect(screen.getByText("123 React Way, London, SW1A 1AA")).toBeInTheDocument();
 
-    // Assert: Check image
     const logoImage = screen.getByRole('img');
     expect(logoImage).toHaveAttribute('src', 'https://freedesignfile.com/upload/2019/03/vector-logo-slice-of-pizza-and-ribbon.jpg');
   });
 
-  // Test #2: The Missing Logo Edge Case
+
+
+  // Test 2: The Missing Logo Edge Case
   it('renders the fallback image when logoURL is empty', () => {
-    // Arrange: Render the component to the virtual screen using mock data from Arrange 2
+    // 1. ARRANGE: Render the component using the mock data with an empty logoURL.
     render(<RestaurantCard restaurant={mockRestaurantNoLogo} />);
 
-    // Assert: Check image
+    // 2. ACT: (None required for initial render).
+
+    // 3. ASSERT: Verify that the component falls back to the default placeholder image.
     const imageElement = screen.getByRole('img');
     expect(imageElement).toHaveAttribute('src', 'https://images.seeklogo.com/logo-png/40/1/just-eat-logo-png_seeklogo-408326.png');
   });
