@@ -49,7 +49,7 @@ Open your browser and navigate to the local host address provided in your termin
 
 ## 🏛️ Architecture & Design Choices
 
-* **Object-Oriented Programming (OOP):** Drawing on my full-stack experience with Go and JavaScript, I wanted to prioritize data integrity on the client side. I built a `Restaurant` class to act as a normalisation layer—it takes the messy raw API data and delivers a clean, predictable object for the UI to use.
+* **Object-Oriented Programming (OOP):** Drawing on my full-stack experience with Go and JavaScript, I wanted to prioritize data integrity on the client side. I built a `Restaurant` class to act as a normalisation layer which takes the messy raw API data and delivers a clean, predictable object for the UI to use.
 * **Safe Data Parsing:** While building this, I learned about optional chaining (`?.`) and loved it. It was a much cleaner and more efficient way to handle edge cases and missing data without writing out a bunch of provisional code.
 * **Component Reusability & Co-location:** I wanted the UI to be reusable, similar to a social network project I built in the past. For styling, I kept the CSS files co-located with their specific components. I read that this is a React standard and it keeps things much tidier than one massive global stylesheet.
 * **Bulletproof Input Validation:** I wanted the postcode search to be bulletproof. I found a solid Regex pattern that handles extra spaces, is case-insensitive, and catches all the iterations of UK postcode formats (like `z1 1zz`, `zz1 1zz`, `zz1z 1zz`).
